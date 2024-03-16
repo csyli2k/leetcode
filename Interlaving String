@@ -1,0 +1,22 @@
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        m=len(s1)
+        n=len(s2)
+        if m+n != len(s3):
+            return False
+        
+        dp={}
+        
+        def dfs(p,q):
+            if p==m and q==n:
+                return True
+            if (p,q) in dp:
+                return dp[(p,q)]
+            
+            if p< m and s1[p]== s3[p+q] and dfs(p+1,q):
+                return True
+            if q < n and s2[q]==s3[p+q] and dfs(p, q+1):
+                return True
+            dp[(p,q)]= False
+            return dp[(p,q)]
+        
+        return dfs(0,0)

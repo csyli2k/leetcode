@@ -1,0 +1,14 @@
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+        temp1={}
+        temp2={}
+        for a in word1:
+            temp1[a]=temp1.get(a,0)+1
+        
+        for a in word2:
+            temp2[a]=temp2.get(a,0)+1
+
+        for a in temp1:
+            if a not in temp2:
+                return False
+        return Counter(temp1.values())==Counter(temp2.values())

@@ -1,0 +1,22 @@
+class Solution:
+    def equalPairs(self, grid: List[List[int]]) -> int:
+        tar={}
+        res=0
+        m=len(grid)
+        n=len(grid[0])
+
+        for i in range(m):
+            temp=""
+            for j in range(n):
+                temp+=str(grid[i][j])+"/"
+            tar[temp]=tar.get(temp,0)+1
+        print(tar)
+        for j in range(n):
+            temp=""
+            for i in range(m):
+                temp+=str(grid[i][j])+"/"
+            if temp in tar:
+                res+=tar[temp]
+
+            
+        return res

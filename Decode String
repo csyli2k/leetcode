@@ -1,0 +1,26 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack=[]
+        for a in s:
+            if a != "]":
+                stack.append(a)
+            else:
+                temp=""
+                while stack and stack[-1]!= "[":
+                    temp+=stack.pop()[::-1]
+                print(temp)
+                # remove [
+                stack.pop()
+                
+                num=0
+                multi=1
+                while stack and stack[-1].isdigit():
+                    num=num+multi*(int(stack.pop()))
+                    multi*=10
+                
+                temp=temp[::-1]
+                stack.append(num*temp)
+        return "".join(stack)
+                
+                
+                

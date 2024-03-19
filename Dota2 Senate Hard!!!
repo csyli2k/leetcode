@@ -1,0 +1,23 @@
+class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        d_que=deque()
+        r_que=deque()
+        for i, a in enumerate(senate):
+            if a=="R":
+                r_que.append(i)
+            else:
+                d_que.append(i)
+        
+        while d_que and r_que:
+            d=d_que.popleft()
+            r=r_que.popleft()
+            if d<r:
+                d_que.append(d+len(senate))
+            else:
+                r_que.append(r+len(senate))
+        if d_que:
+            return "Dire"
+        if r_que:
+            return "Radiant"
+        
+            

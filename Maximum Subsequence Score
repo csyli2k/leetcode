@@ -1,0 +1,19 @@
+class Solution:
+    def maxScore(self, nums1: List[int], nums2: List[int], k: int) -> int:
+        temp=[]
+        for a,b in zip(nums1, nums2):
+            temp.append((a,b))
+        temp=sorted(temp, key = lambda x: x[-1], reverse=True)
+        
+        res=0
+        currSum=0
+        minheap=[]
+        res=0
+        for n1, n2 in temp:
+            heapq.heappush(minheap, n1)
+            currSum+=n1
+            if len(minheap)>k:
+                currSum-= heapq.heappop(minheap)
+            if len(minheap)==k:
+                res= max(res, currSum* n2)
+        return res

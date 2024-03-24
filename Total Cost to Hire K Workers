@@ -1,0 +1,29 @@
+class Solution:
+    def totalCost(self, costs: List[int], k: int, candidates: int) -> int:
+        temp=[]
+        n=len(costs)-1
+        
+        for i in range(candidates):
+            heapq.heappush(temp, (costs[i], 0))
+        for i in range(max(candidates, len(costs) - candidates), len(costs)):
+            heapq.heappush(temp,(costs[i], 1))
+        
+
+        
+        h_next= candidates
+        t_next= n-candidates
+
+        res=0
+        for _ in range(k):
+            curr, mark= heapq.heappop(temp)
+            res+=curr
+            if h_next <= t_next:
+                if mark ==0:
+                    heapq.heappush(temp, (costs[h_next],0))
+                    h_next+=1
+                else:
+                    heapq.heappush(temp, (costs[t_next],1))
+                    t_next-=1
+        return res
+                
+                

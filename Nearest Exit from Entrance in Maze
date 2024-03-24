@@ -1,0 +1,21 @@
+class Solution:
+    def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
+        m=len(maze)
+        n=len(maze[0])
+        dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        maze[entrance[0]][entrance[1]]="!"
+
+        q=deque()
+        q.append([entrance[0], entrance[1], 0])
+        res=0
+        while q:
+            curr_i, curr_j, curr_steps= q.popleft()
+            for di,dj in dirs:
+                new_i=curr_i+di
+                new_j=curr_j+dj
+                if 0<=new_i< m and 0<=new_j< n and maze[new_i][new_j]==".":
+                    if new_i==0 or new_i==m-1 or new_j==0 or new_j ==n-1:
+                        return curr_steps+1
+                    maze[new_i][new_j]="!"
+                    q.append([new_i, new_j,curr_steps+1])
+        return -1

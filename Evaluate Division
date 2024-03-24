@@ -1,0 +1,33 @@
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        adj=defaultdict(list)
+        n=len(equations)
+        
+        for i in range(n):
+            a,b = equations[i][0], equations[i][1]
+            adj[a].append((b, values[i]))
+            adj[b].append((a, 1.0/values[i]))
+        
+        def dfs(curr, target, value):
+            if curr==target:
+                return value
+            if curr in seen:
+                return -1.0
+            seen.add(curr)
+            for new_node, new_value in adj[curr]:
+                temp=dfs(new_node, target, value*new_value)
+                if temp != -1:
+                    return temp
+            return -1.0
+
+        res=[]
+        for query in queries:
+            source, target = query[0], query[1]
+            if source not in adj or target not in adj:
+                res.append(-1.0)
+            else:
+                seen=set()
+                temp=dfs(source, target, 1)
+                res.append(temp)
+        return res
+                

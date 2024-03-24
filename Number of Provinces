@@ -1,0 +1,23 @@
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+
+
+        dp=set()
+        res=0
+        n=len(isConnected)
+
+        def dfs(curr):
+            if curr in dp:
+                return
+            dp.add(curr)
+            for i in range(n):
+                if isConnected[curr][i] ==1 and i not in dp:
+                    dfs(i)
+            return
+
+        
+        for i in range(n):
+            if i not in dp:
+                res+=1
+                dfs(i)
+        return res

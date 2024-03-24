@@ -1,0 +1,19 @@
+class Solution:
+    def minReorder(self, n: int, connections: List[List[int]]) -> int:
+        adj=defaultdict(list)
+        for u,v in connections:
+            adj[u].append((v, 1))
+            adj[v].append((u,0))
+        seen=set()
+        seen.add(0)
+        res=0
+        def dfs(curr):
+            nonlocal res
+            for new_node, value in adj[curr]:
+                if new_node not in seen:
+                    seen.add(new_node)
+                    res+=value
+                    dfs(new_node)
+        
+        dfs(0)
+        return res

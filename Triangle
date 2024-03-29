@@ -1,0 +1,16 @@
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        m=len(triangle)
+        dp=[0 for _ in range(m+1)]
+
+        def dfs(m):
+            if m==0:
+                return 
+            for i in range(m):
+                dp[i]=triangle[m-1][i]+ min(dp[i], dp[i+1])
+            dfs(m-1)
+
+            return 
+
+        dfs(m)
+        return dp[0]

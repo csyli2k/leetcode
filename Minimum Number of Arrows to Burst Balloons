@@ -1,0 +1,10 @@
+class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        points= sorted(points, key=lambda x:x[1])
+        curr=points[0][-1]
+        res=1
+        for interval in points[1:]:
+            if interval[0]> curr:
+                res+=1
+                curr=interval[-1]
+        return res

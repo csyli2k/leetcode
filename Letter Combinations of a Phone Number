@@ -3,14 +3,20 @@ class Solution:
         letters = {"2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
         res=[]
         if not digits:
-            return res
+            return None
 
-        def dfs(index,curr):
-            if len(curr)==len(digits):
-                res.append(curr)
+        def backtracking(curr, temp):
+            if len(temp)== len(digits):
+                res.append("".join(temp))
                 return
-            for letter in letters[digits[index]]:
-                dfs(index+1, curr+letter)
+            
+            if curr >= len(digits) or len(temp) > len(digits):
+                return
+            
+            for char in letters[digits[curr]]:
+                temp.append(char)
+                backtracking(curr+1, temp)
+                temp.pop()
             return
-        dfs(0, "")
+        backtracking(0,[])
         return res

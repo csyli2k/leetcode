@@ -1,0 +1,18 @@
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def bns(target):
+            l=0
+            r=len(nums)
+            while l<r:
+                mid=l+(r-l)//2
+                if nums[mid] >=target:
+                    r=mid
+                else:
+                    l=mid+1
+            return l
+        start= bns(target)
+        end= bns(target+1)-1
+        if end < start:
+            return [-1,-1]
+        else:
+            return [start, end]

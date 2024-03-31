@@ -1,0 +1,36 @@
+class Solution:
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
+        dir=[(-1,-1),(-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
+        m=len(board)
+        n=len(board[0])
+        def dfs(x,y):
+            count=0
+            for di,dj in dir:
+                new_i= x+di
+                new_j= y+dj
+                if not(0<= new_i<m) or not(0<= new_j< n) or board[new_i][new_j] != "M":
+                    continue
+                count+=1
+            
+
+            if count >0:
+                board[x][y]=str(count)
+            else:
+                board[x][y]="B"
+                for di,dj in dir:
+                    new_i= x+di
+                    new_j= y+dj
+                    if not(0<= new_i<m) or not(0<= new_j< n) or board[new_i][new_j] != "E":
+                        continue
+                    dfs(new_i, new_j)
+            return
+
+        
+        x,y =click
+        # check if we clicked the bomb, if yes then we end the game
+        if board[x][y]=="M":
+            board[x][y]="X"
+        # else we start revealing all the possibility
+        else:
+            dfs(x,y)
+        return board                

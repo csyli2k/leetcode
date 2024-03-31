@@ -1,0 +1,33 @@
+class Trie:
+    def __init__(self):
+        self.tree= {}
+        self.word_list= []
+class Solution:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        def add_word(root, word):
+            curr=root
+            for c in word:
+                if c not in curr.tree:
+                    curr.tree[c]=Trie()
+                curr=curr.tree[c]
+                curr.word_list.append(word)
+                if len(curr.word_list)>3:
+                    curr.word_list.pop()
+        
+        products.sort()
+        root=Trie()
+        for word in products:
+            add_word(root, word)
+
+        
+        res=[]
+        curr=root
+        flag=False
+        for ch in searchWord:
+            if flag or ch not in curr.tree:
+                res.append([])
+                flag=True
+            else:
+                curr=curr.tree[ch]
+                res.append(curr.word_list)
+        return res

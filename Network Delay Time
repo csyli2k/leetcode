@@ -1,0 +1,23 @@
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        temp=defaultdict(list)
+        for time in times:
+            source, dest, value= time
+            temp[source].append((value, dest))
+        
+        q=[]
+        q.append((0, k))
+        res=-1
+        seen=set()
+        
+        while q:
+            curr_t, curr_node = heapq.heappop(q)
+            if curr_node in seen:
+                continue
+            seen.add(curr_node)
+            res=curr_t
+            for next_t, next_node in temp[curr_node]:
+                if next_node not in seen:
+                    heapq.heappush(q,(curr_t+next_t, next_node))
+        
+        return res if len(seen)==n else -1

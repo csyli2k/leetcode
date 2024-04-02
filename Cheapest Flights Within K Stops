@@ -1,0 +1,21 @@
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        temp=defaultdict(list)
+        for flight in flights:
+            source, dest, price= flight
+            temp[source].append((dest, price))
+        q=deque()
+        q.append((src, 0))
+        visited= [math.inf for _ in range(n)]
+        step=0 
+        while q and step <= k:
+            n=len(q)
+            for i in range(n):
+                curr_node, curr_price= q.popleft()
+                for nxt_node, new_price in temp[curr_node]:
+                    total_price= curr_price+new_price
+                    if total_price< visited[nxt_node]:
+                        visited[nxt_node]= total_price
+                        q.append((nxt_node, visited[nxt_node]))
+            step+=1
+        return visited[dst] if visited[dst]!=math.inf else -1

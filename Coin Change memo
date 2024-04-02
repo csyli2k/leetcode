@@ -1,0 +1,18 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp=[-1 for _ in range(amount+1)]
+        dp[0]=0
+        def dfs(curr):
+            if curr==0:
+                return 0
+            if curr<0:
+                return math.inf
+            if dp[curr]>0:
+                return dp[curr]
+            temp=math.inf
+            for c in coins:
+                temp=min(temp, 1+dfs(curr-c))
+            dp[curr]= temp
+            return dp[curr]
+        res=dfs(amount)
+        return res if res != math.inf else -1

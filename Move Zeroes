@@ -5,7 +5,7 @@ class Solution:
         """
         curr=0
         for i in range(len(nums)):
-            if nums[i]!=0:
-                nums[i],nums[curr]=nums[curr], nums[i]
+            if nums[i] != 0:
+                nums[i], nums[curr] = nums[curr], nums[i]
                 curr+=1
-        
+        return nums

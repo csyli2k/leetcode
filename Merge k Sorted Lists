@@ -8,7 +8,7 @@ class Solution:
         def merge(l1, l2):
             res=temp=ListNode()
             while l1 and l2:
-                if l1.val <  l2.val:
+                if l1.val < l2.val:
                     temp.next=l1
                     l1=l1.next
                 else:
@@ -28,9 +28,9 @@ class Solution:
             for i in range(0, len(lists), 2):
                 l1= lists[i]
                 if i+1 < len(lists):
-                    l2=lists[i+1]
+                    l2= lists[i+1]
                 else:
-                    l2=None
-                temp.append(merge(l1, l2))
+                    l2= None
+                temp.append(merge(l1,l2))
             lists=temp
         return lists[0]

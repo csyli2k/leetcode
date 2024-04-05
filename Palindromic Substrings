@@ -1,0 +1,15 @@
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        def is_pali(l,r):
+            res=0
+            while l>=0 and r < len(s) and s[l]==s[r]:
+                l-=1
+                r+=1
+                res+=1
+            return res
+        
+        f_res=0
+        for i in range(len(s)):
+            f_res+= is_pali(i,i)
+            f_res+= is_pali(i,i+1)
+        return f_res

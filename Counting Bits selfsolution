@@ -1,0 +1,13 @@
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        def helper(n):
+            res=0
+            while n:
+                if n&1 == 1:
+                    res+=1
+                n>>=1
+            return res
+        f_res=[]
+        for i in range(n+1):
+            f_res.append(helper(i))
+        return f_res

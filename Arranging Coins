@@ -1,0 +1,17 @@
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        if n==1:
+            return 1
+        l=0
+        r=n
+
+        while l<r:
+            mid=l+(r-l)//2
+            curr=mid*(mid+1)//2
+            if curr== n:
+                return mid
+            if curr>n:
+                r=mid
+            else:
+                l=mid+1
+        return l-1

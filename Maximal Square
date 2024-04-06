@@ -1,0 +1,26 @@
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        dp={}
+        m=len(matrix)
+        n=len(matrix[0])
+        
+        def dfs(p,q):
+            if p>=m or q>=n:
+                return 0
+            
+            if (p,q) in dp:
+                return dp[(p,q)]
+            
+            right=dfs(p,q+1)
+            down=dfs(p+1,q)
+            diag=dfs(p+1, q+1)
+
+            if matrix[p][q]== "1":
+                dp[(p,q)]=1+ min(right, down, diag)
+            else:
+                dp[(p,q)]=0
+
+            return dp[(p,q)]
+
+        dfs(0,0)
+        return max(dp.values())**2

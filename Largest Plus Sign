@@ -1,0 +1,34 @@
+class Solution:
+    def orderOfLargestPlusSign(self, n: int, mines: List[List[int]]) -> int:
+        dp=[[math.inf for _ in range(n)] for _ in range(n)]
+        mines_set = set(map(tuple, mines))
+        
+        for i in range(n):
+            count=0
+            # count all 1s on the right
+            for j in range(n):
+                count= count+1 if (i,j) not in mines_set else 0
+                dp[i][j]=min(dp[i][j], count)
+            
+            count=0
+            # count all 1s on the left and compared to right
+            for j in range(n-1,-1,-1):
+                count= count+1 if (i,j) not in mines_set else 0
+                dp[i][j]=min(dp[i][j], count)
+
+        res=0
+
+        for j in range(n):
+            count=0
+            for i in range(n):
+                count= count+1 if (i,j) not in mines_set else 0
+                dp[i][j]=min(dp[i][j], count)
+
+            count=0
+            for i in range(n-1,-1,-1):
+                count= count+1 if (i,j) not in mines_set else 0
+                dp[i][j]=min(dp[i][j], count)
+                res=max(res, dp[i][j])
+        return res
+
+                

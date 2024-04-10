@@ -1,0 +1,28 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        dir = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        m=len(board)
+        n=len(board[0])
+
+        def search(i,j, curr_word):
+            if len(curr_word)==0:
+                return True
+            if not (0<=i <m and 0<=j<n and board[i][j] == curr_word[0]):
+                return False
+
+            temp=board[i][j]
+            board[i][j]="#"
+            for di, dj in dir:
+                new_i= di+i
+                new_j= dj+j
+                if search(new_i, new_j, curr_word[1:]):
+                    return True
+            board[i][j]=temp
+
+            return False
+        
+        for i in range(m):
+            for j in range(n):
+                if search(i,j, word):
+                    return True
+        return False

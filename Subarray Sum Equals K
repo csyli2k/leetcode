@@ -1,0 +1,13 @@
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        temp=defaultdict(int)
+        res=0
+        curr=0
+        temp[0]+=1
+
+        for num in nums:
+            curr+=num
+            if curr-k in temp:
+                res+=temp[curr-k]
+            temp[curr]+=1
+        return res

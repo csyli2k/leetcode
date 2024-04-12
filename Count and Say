@@ -1,0 +1,20 @@
+class Solution:
+    def countAndSay(self, n: int) -> str:
+        target="1"
+        if n==1:
+            return target
+        else:
+            for _ in range(2, n+1):
+                res=""
+                curr_len=len(target)
+                curr=0
+                while curr< curr_len:
+                    count=0
+                    curr_cand=target[curr]
+                    while curr< curr_len and target[curr]== curr_cand:
+                        count+=1
+                        curr+=1
+                    res+=str(count)+str(curr_cand)
+                target=res
+        return target
+                

@@ -1,0 +1,18 @@
+class Solution:
+    def shortestBeautifulSubstring(self, s: str, k: int) -> str:
+        curr=0
+        l=0
+        res=s+"1"
+        for r in range(len(s)):
+            curr+=int(s[r])
+            while curr>=k:
+                if curr==k:
+                    curr_str=s[l:r+1]
+                    res=min(res, s[l:r+1], key=len)
+                    if len(res)== len(curr_str):
+                        res=min(res, curr_str)
+                curr-=int(s[l])
+                l+=1
+
+        return res if len(res)!= len(s)+1 else ""
+                    

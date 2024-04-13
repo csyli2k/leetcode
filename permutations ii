@@ -1,0 +1,20 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res=[]
+        def backtracking(temp, mapping):
+            if len(temp)==len(nums):
+                res.append(temp.copy())
+                return
+            
+            for num in mapping:
+                if mapping[num]>1:
+                    temp.append(num)
+                    mapping[num]-=1
+                    backtracking(temp, mapping)
+                    
+                    temp.pop()
+                    mapping[num]+=1
+            return
+        mapping=Counter(nums)
+        backtracking([], mapping)
+        return res

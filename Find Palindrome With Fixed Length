@@ -1,0 +1,31 @@
+class Solution:
+    def kthPalindrome(self, queries: List[int], intLength: int) -> List[int]:
+        def generate_pali(query):
+            # odd length
+            start=query-1
+            if intLength%2:
+                curr= int('1'+ ('0'* (intLength//2)))
+                max_length=len(str(curr))
+                curr+=start
+                if len(str(curr)) > max_length:
+                    return -1
+                else:
+                    curr=str(curr)
+                    temp= curr[:-1]
+                    res=curr+temp[::-1]
+                    return int(res)
+            else:
+                curr= int('1'+ ('0'* (intLength//2-1)))
+                max_length=len(str(curr))
+                curr+=start
+                if len(str(curr)) > max_length:
+                    return -1
+                else:
+                    curr=str(curr)
+                    temp= curr[::-1]
+                    res=curr+temp
+                    return int(res)                
+        res=[]
+        for query in queries:
+            res.append(generate_pali(query))
+        return res

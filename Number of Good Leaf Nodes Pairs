@@ -1,0 +1,28 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def countPairs(self, root: TreeNode, distance: int) -> int:
+        res=0
+        def dfs(curr_node):
+            nonlocal res
+            if not curr_node:
+                return []
+            if not curr_node.left and not curr_node.right:
+                return [1]
+            left= dfs(curr_node.left)
+            right=dfs(curr_node.right)
+
+            for i in left:
+                for j in right:
+                    if i+j <= distance:
+                        res+=1
+            curr= [i+1 for i in left+right if i+1 < distance]
+
+            return curr
+        
+        dfs(root)
+        return res                

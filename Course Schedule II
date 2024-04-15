@@ -1,0 +1,23 @@
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        adj=defaultdict(list)
+        num_preq = [0]* numCourses
+
+        for crs, preq in prerequisites:
+            adj[preq].append(crs)
+            num_preq[crs]+=1
+        
+        q=deque()
+
+        for i in range(numCourses):
+            if num_preq[i]==0:
+                q.append(i)
+        res=[]
+        while q:
+            curr=q.popleft()
+            res.append(curr)
+            for next_crs in adj[curr]:
+                num_preq[next_crs]-=1
+                if num_preq[next_crs]==0:
+                    q.append(next_crs)
+        return res if len(res)==numCourses else []

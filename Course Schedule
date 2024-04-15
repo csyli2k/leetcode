@@ -1,0 +1,22 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        adj=defaultdict(list)
+        num_preq= [0] * numCourses
+        for crs, preq in prerequisites:
+            adj[preq].append(crs)
+            num_preq[crs]+=1
+
+        q= deque()
+        for crs in range(numCourses):
+            if num_preq[crs]==0:
+                q.append(crs)
+        
+        while q:
+            curr= q.popleft()
+            numCourses-=1
+            for next_crs in adj[curr]:
+                num_preq[next_crs]-=1
+                if num_preq[next_crs]==0:
+                    q.append(next_crs)
+        return numCourses==0
+            

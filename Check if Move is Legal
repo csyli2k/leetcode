@@ -1,0 +1,21 @@
+class Solution:
+    def checkMove(self, board: List[List[str]], rMove: int, cMove: int, color: str) -> bool:
+        dir = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        m = len(board)
+        n = len(board[0])
+
+        def valid_direction(i, j, di, dj):
+            has_opposite_color = False
+            while 0 <= i < m and 0 <= j < n and board[i][j] != '.':
+                if board[i][j] == color:
+                    # Must have at least one piece of opposite color in between
+                    return has_opposite_color
+                has_opposite_color = True  # Found at least one piece of opposite color
+                i += di
+                j += dj
+            return False  # Didn't close the bracket with the current color
+
+        for di, dj in dir:
+            if valid_direction(rMove + di, cMove + dj, di, dj):
+                return True
+        return False

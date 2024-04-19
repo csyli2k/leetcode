@@ -1,0 +1,27 @@
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        if '0000' in deadends:
+            return -1
+        def helper(curr_code):
+            res=[]
+            for i in range(4):
+                var= str((int(curr_code[i])+1)%10)
+                res.append(curr_code[:i]+var+curr_code[i+1:])
+                var=  str((int(curr_code[i])-1+10)%10)
+                res.append(curr_code[:i]+var+curr_code[i+1:])
+            return res
+
+        
+        q=deque()
+        q.append(("0000", 0))
+        visited= set(deadends)
+        while q:
+            curr_code, step= q.popleft()
+            if curr_code == target:
+                return step
+            next_round_codes= helper(curr_code)
+            for code in next_round_codes:
+                if code not in visited:
+                    q.append((code, step+1))
+                    visited.add(code)
+        return -1

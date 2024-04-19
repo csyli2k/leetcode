@@ -1,0 +1,13 @@
+class Solution:
+    def minDeletions(self, s: str) -> int:
+        temp=defaultdict(int)
+        for ch in s:
+            temp[ch]+=1
+        unique=set()
+        res=0
+        for ch in temp:
+            while temp[ch] in unique and temp[ch]>0:
+                temp[ch]-=1
+                res+=1
+            unique.add(temp[ch])
+        return res

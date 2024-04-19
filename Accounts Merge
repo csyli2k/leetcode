@@ -1,0 +1,41 @@
+class UnionFind:
+    def __init__(self,n):
+        self.p= [i for i in range(n)]
+        self.rank=[1 for _ in range(n)]
+    def find(self,x):
+        while x != self.p[x]:
+            self.p[x]=self.p[self.p[x]]
+            x=self.p[x]
+        return x
+    def union(self, x,y):
+        p1,p2= self.find(x), self.find(y)
+        if p1==p2:
+            return 
+        if self.rank[p1] > self.rank[p2]:
+            self.p[p2]=p1
+            self.rank[p1]+=1
+        else:
+            self.p[p1]=p2
+            self.rank[p2]+=1
+        return
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        email_dict={}
+        uf=UnionFind(len(accounts))
+        for i, account in enumerate(accounts):
+            for email in account[1:]:
+                if email not in email_dict:
+                    email_dict[email]=i
+                else:
+                    uf.union(i, email_dict[email])
+        temp=defaultdict(list)
+        for email, index in email_dict.items():
+            target_index=uf.find(index)
+            temp[target_index].append(email)
+        
+        res=[]
+        for index, emails in temp.items():
+            t=[accounts[index][0]]
+            t+= sorted(emails)
+            res.append(t)
+        return res

@@ -1,27 +1,25 @@
 class Solution:
     def pathSum(self, nums: List[int]) -> int:
-        temp={}
+        dp={}
         for num in nums:
-            d= num//100
-            p= (num%100) //10
+            l = num//100
+            p= (num%100)//10
             v= num%10
-            temp[(d,p)]=v
-        
+            dp[(l,p)]=v
         res=0
         def dfs(p,q, curr):
             nonlocal res
-            if (p,q) in temp:
-                curr+=temp[(p,q)]
-            # check if it is leave 
-            if (p+1, 2*q-1) not in temp and (p+1, 2*q) not in temp:
+            if (p,q) in dp:
+                curr+=dp[(p,q)]
+            # (p,q) is leaf
+            if (p+1, 2*q) not in dp and (p+1, 2*q-1) not in dp:
                 res+=curr
-                return
-            # there is left tree
-            if (p+1, 2*q-1) in temp:
-                dfs(p+1, 2*q-1, curr)
-            if (p+1, 2*q) in temp:
+                return 
+            if (p+1, 2*q) in dp:
                 dfs(p+1, 2*q, curr)
-            
+            if (p+1, 2*q-1) in dp:
+                dfs(p+1, 2*q-1, curr)
+
             return
         dfs(1,1,0)
         return res

@@ -1,0 +1,15 @@
+class Solution:
+    def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
+        dp_list= list(zip(difficulty, profit))
+        dp_list=sorted(dp_list, key= lambda x:x[0])
+        worker.sort()
+        n=len(worker)
+        res=0
+        curr=0
+        profit=0
+        for skill in worker:
+            while curr<n and dp_list[curr][0]<= skill:
+                profit=max(profit,dp_list[curr][1])
+                curr+=1
+            res+= profit
+        return res

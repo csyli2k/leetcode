@@ -1,0 +1,22 @@
+class Solution:
+    def minimumFuelCost(self, roads: List[List[int]], seats: int) -> int:
+        adj=defaultdict(list)
+        for src, dst in roads:
+            adj[src].append(dst)
+            adj[dst].append(src)
+        
+        res=0
+        visited=set()
+        def dfs(curr):
+            nonlocal res
+            people =1
+            visited.add(curr)
+            for nxt in adj[curr]:
+                if nxt not in visited:
+                    people+= dfs(nxt)
+            
+            if curr != 0:
+                res+= math.ceil(people/seats)
+            return people
+        dfs(0)
+        return res

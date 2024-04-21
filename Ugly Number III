@@ -1,0 +1,16 @@
+class Solution:
+    def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
+        ab= a*b//gcd(a,b)
+        bc= b*c//gcd(b,c)
+        ac= a*c//gcd(a,c)
+        abc= ab*c//gcd(ab,c)
+
+        l=1
+        r= n * min(a, b,c)
+        while l < r:
+            mid = l +(r-l)//2
+            if mid//a +mid//b + mid//c - mid//ab -mid//bc -mid//ac +mid//abc >= n:
+                r=mid
+            else:
+                l=mid+1
+        return l

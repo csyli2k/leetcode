@@ -1,0 +1,13 @@
+class Solution:
+    def closestToTarget(self, arr: List[int], target: int) -> int:
+        res=math.inf
+        seen=set()
+        for num in arr:
+            temp=set()
+            seen.add( 2**32 -1)
+            for c in seen:
+                c&= num
+                res=min(res, abs(c-target))
+                temp.add(c)
+            seen=temp
+        return res

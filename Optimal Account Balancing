@@ -1,0 +1,27 @@
+class Solution:
+    def minTransfers(self, transactions: List[List[int]]) -> int:
+        balance= defaultdict(int)
+        for src, dst, amount in transactions:
+            balance[src]-=amount
+            balance[dst]+=amount
+        b_list=[]
+        for amount in balance.values():
+            if amount:
+                b_list.append(amount)
+        
+        n=len(b_list)
+
+        def dfs(curr):
+            while curr < n and not b_list[curr]:
+                curr+=1
+            if curr== n:
+                return 0
+            cost=math.inf
+            for nxt in range(curr+1, n):
+                # if they are oppsite 
+                if b_list[nxt] * b_list[curr] <0:
+                    b_list[nxt]+=b_list[curr]
+                    cost=min(cost, 1+dfs(curr+1))
+                    b_list[nxt]-= b_list[curr]
+            return cost
+        return dfs(0)

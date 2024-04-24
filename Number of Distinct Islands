@@ -1,0 +1,27 @@
+class Solution:
+    def numDistinctIslands(self, grid: List[List[int]]) -> int:
+        dir=[(-1,0), (1,0), (0,-1), (0,1)]
+        m=len(grid)
+        n=len(grid[0])
+
+        def dfs(i,j):
+            grid[i][j]=0
+            curr_island.add(((i-start_i),(j-start_j)))
+            for di, dj in dir:
+                new_i= i+di
+                new_j= j+dj
+                if (0<= new_i<m and 0<=new_j<n) and grid[new_i][new_j]==1:
+                    dfs(new_i, new_j)
+            return
+        unique_islands=set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]==1:
+                    curr_island=set()
+                    start_i=i
+                    start_j=j
+                    dfs(i,j)
+                    if curr_island:
+                        unique_islands.add(tuple(curr_island))
+        return len(unique_islands)
+                        

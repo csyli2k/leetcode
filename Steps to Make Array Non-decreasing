@@ -1,0 +1,18 @@
+class Solution:
+    def totalSteps(self, nums: List[int]) -> int:
+        stack=[]
+        res=0
+
+        for num in nums:
+            step=0
+            # number of smaller before curr num
+            while stack and stack[-1][0]<= num:
+                step= max(step, stack.pop()[1])
+            # there is bigger number which can delete curr num
+            if stack:
+                step+=1
+            
+            res=max(res, step)
+            
+            stack.append((num, step))
+        return res

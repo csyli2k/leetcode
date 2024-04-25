@@ -1,0 +1,28 @@
+class Solution:
+    def minInsertions(self, s: str) -> int:
+        left=0
+        res=0
+        
+        i=0
+        n=len(s)
+
+        while i<n:
+            if s[i]=="(":
+                left+=1
+                i+=1
+
+            else:
+                # check condition for leftcounter
+                if left>0:
+                    left-=1
+                else:
+                    res+=1
+
+                # 
+                if i< n-1 and s[i+1]==")":
+                    i+=2
+                else:
+                    res+=1
+                    i+=1
+        return res+2*left
+                

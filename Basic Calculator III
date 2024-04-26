@@ -1,0 +1,38 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack=[]
+        res=0
+        last_num=0
+        curr=0
+        prev_op= "+"
+
+        for ch in s+"+":
+            if ch.isdigit():
+                curr= curr*10+ int(ch)
+            elif ch =="(":
+                stack.append(res)
+                stack.append(last_num)
+                stack.append(prev_op)
+                prev_op="+"
+                res=0
+                last_num=0
+            elif ch in "+-*/)":
+                if prev_op=="+":
+                    res+=last_num
+                    last_num=curr
+                elif prev_op=="-":
+                    res+=last_num
+                    last_num= -curr
+                elif prev_op=="*":
+                    last_num*=curr
+                else:
+                    last_num=int(last_num/curr)
+                if ch ==")":
+                    curr= res+ last_num
+                    prev_op=stack.pop()
+                    last_num=stack.pop()
+                    res= stack.pop()
+                else:
+                    curr=0
+                    prev_op=ch
+        return res+ last_num

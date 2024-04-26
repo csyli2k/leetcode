@@ -1,0 +1,18 @@
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        dp={}
+        allstones= set(stones)
+        def dfs(stone, jump):
+            if stone==stones[-1]:
+                return True
+            if (stone, jump) in dp:
+                return dp[(stone, jump)]
+            
+            for d in [ -1,0, 1]:
+                if jump+d > 0 and stone+jump+d in allstones:
+                    dp[(stone+jump+d, jump+d)] = dfs(stone+jump+d, jump+d)
+                    if dp[(stone+jump+d, jump+d)]:
+                        return True
+            return False
+        return dfs(0,0)
+        

@@ -1,0 +1,28 @@
+
+    def dijkstra(self, grid: List[List[int]], k: int) -> int:
+        m=len(grid)
+        n=len(grid[0])
+        dir= [(-1,0), (1,0), (0,1), (0,-1)]
+        dp=defaultdict()
+        for i in range(m):
+            for j in range(n):
+                dp[(i,j)]=math.inf
+        dp[(0,0)]=0
+        q=[]
+        q.append((0,0,0))
+
+        while q:
+            curr_distance, i,j = heapq.heappop(q)
+            if i==m-1 and j==n-1:
+                return curr_distance
+            
+            for di, dj in dir:
+                new_i=i+di
+                new_j=j+dj
+                if 0<= new_i<m and 0<= new_j<n and grid[new_i][new_j] ==0:
+                    new_dist= curr_distance +1
+                    if new_dist < dp[(new_i, new_j)]:
+                        dp[(new_i, new_j)]= new_dist
+                        heapq.heappush(q,(new_dist, new_i, new_j) )
+        return -1
+            

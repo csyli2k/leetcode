@@ -1,0 +1,20 @@
+    def bfs_shortest_path(self, grid: List[List[int]], k: int) -> int:
+        m=len(grid)
+        n=len(grid[0])
+        dir= [(-1,0), (1,0), (0,1), (0,-1)]
+        visited=set()
+        q=deque()
+        q.append((0,0,0))
+            
+        while q:
+            i,j, curr_step= q.popleft()
+            visited.add((i,j))
+            if i==m-1 and j==n-1:
+                return curr_step
+            for di, dj in dir:
+                new_i=i+di
+                new_j=j+dj
+                if 0<= new_i< m and 0<= new_j< n and grid[new_i][new_j]==0:
+                    if (new_i, new_j) not in visited:
+                        q.append((new_i, new_j, curr_step+1))
+        return -1

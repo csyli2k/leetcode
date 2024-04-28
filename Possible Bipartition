@@ -1,0 +1,36 @@
+class Solution:
+    def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
+        p=[i for i in range(n+1)]
+        rank=[0 for _ in range(n+1)]
+
+        def find(x):
+            while p[x]!=x:
+                p[x]=p[p[x]]
+                x=p[x]
+            return x
+
+        def union(x,y):
+            p1=find(x)
+            p2=find(y)
+
+            if p1==p2:
+                return True
+            
+            elif p1>p2:
+                p[p2]=p1
+                rank[p1]+=1
+            else:
+                p[p1]=p2
+                rank[p2]+=1
+        
+        adj = defaultdict(list)
+        for src, dst in dislikes:
+            adj[src].append(dst)
+            adj[dst].append(src)
+        
+        for node in range(1, n+1):
+            for dislikes in adj[node]:
+                if find(node)== find(dislikes):
+                    return False
+                union(dislikes, adj[node][0])
+        return True

@@ -1,15 +1,11 @@
 class Solution:
     def longestSubstring(self, s: str, k: int) -> int:
-        if len(s)<k:
+        if len(s)< k:
             return 0
-        
         for c in set(s):
-            if s.count(c) <k:
-                res=-math.inf
-                for t in s.split(c):
-                    temp=self.longestSubstring(t, k)
-                    res=max(res, temp)
-                return res
-
+            if s.count(c)<k:
+                curr=0
+                for temp in s.split(c):
+                    curr=max(curr,self.longestSubstring(temp, k))
+                return curr
         return len(s)
-        

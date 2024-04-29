@@ -5,23 +5,21 @@ class Solution:
         visited=set()
         visited.add((0,0,k))
         q=deque()
-        q.append((0,0, k, 0))
-        dir=[(1,0), (-1,0), (0,1), (0,-1)]
-
+        q.append((0,0,k,0))
+        dir= [(1,0), (-1,0), (0,1), (0,-1)]
         while q:
-            i,j, obj, step= q.popleft()
-            
+            i,j, obs, step= q.popleft()
             if i==m-1 and j==n-1:
                 return step
             
             for di, dj in dir:
-                new_i= i+di
-                new_j= j+dj
-                if 0<=new_i < m and 0<=new_j < n:
-                    if grid[new_i][new_j]==0 and (new_i, new_j, obj) not in visited:
-                        q.append((new_i, new_j, obj, step+1))
-                        visited.add((new_i, new_j, obj))
-                    if grid[new_i][new_j]==1 and obj>0 and (new_i, new_j, obj-1) not in visited:
-                        q.append((new_i, new_j, obj-1, step+1))
-                        visited.add((new_i, new_j, obj-1))
+                new_i=i+di
+                new_j=j+dj
+                if 0<=new_i< m and 0<=new_j <n:
+                    if (new_i, new_j, obs) not in visited and grid[new_i][new_j]==0:
+                        visited.add((new_i, new_j,obs))
+                        q.append((new_i, new_j, obs, step+1))
+                    if obs>0 and (new_i, new_j, obs-1) not in visited and grid[new_i][new_j]==1:
+                        visited.add((new_i, new_j,obs-1))
+                        q.append((new_i, new_j, obs-1, step+1))
         return -1

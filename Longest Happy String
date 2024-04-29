@@ -1,0 +1,19 @@
+class Solution:
+    def longestDiverseString(self, a: int, b: int, c: int) -> str:
+        res=[]
+        count=[[a,"a"], [b, "b"], [c, "c"]]
+
+        while True:
+            count.sort(key=lambda x:x[0], reverse=True)
+            nxt=False
+            for i, (cnt, letter) in enumerate(count):
+                if cnt<=0:
+                    break
+                if len(res)>= 2 and res[-2]==res[-1]==letter:
+                    continue
+                nxt=True
+                res.append(letter)
+                count[i][0]-=1
+                break
+            if not nxt:
+                return "".join(res)

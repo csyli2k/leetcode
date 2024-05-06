@@ -1,0 +1,24 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
+        res=[]
+        target= set(to_delete)
+        def dfs(curr, prev):
+            if not curr:
+                return None
+            if prev and curr.val not in target:
+                res.append(curr)
+            prev = curr.val in target
+
+            curr.left= dfs(curr.left, prev)
+            curr.right= dfs(curr.right, prev)
+            
+            return curr if not prev else None
+        dfs(root, True)
+        return res
+        

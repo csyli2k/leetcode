@@ -1,0 +1,25 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        res=[]
+        if not root:
+            return []
+        def dfs(curr, index):
+            if not curr:
+                return
+            if index >= len(res):
+                res.append([])
+            res[index].append(curr.val)
+            for child in curr.children:
+                dfs(child, index+1)
+            return 
+        dfs(root, 0)
+        return res
+                

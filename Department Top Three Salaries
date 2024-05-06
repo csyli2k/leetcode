@@ -1,0 +1,17 @@
+With sorted_talbe as (select
+    E.name as `Employee`,
+    D.name as `Department`,
+    E.salary as `Salary`,
+    Dense_Rank() over (PARTITION BY D.id order by e.salary desc ) as rank1
+from Employee as E
+join 
+    Department as D
+on
+    E.departmentId= D.id)
+
+select
+    t.Department, 
+    t.Employee,
+    t.Salary
+from sorted_talbe as t
+where rank1 <=3

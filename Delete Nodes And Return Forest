@@ -7,18 +7,18 @@
 class Solution:
     def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
         res=[]
-        target= set(to_delete)
-        def dfs(curr, prev):
+        def dfs(curr, is_delete):
             if not curr:
                 return None
-            if prev and curr.val not in target:
+            if is_delete and curr.val not in to_delete:
                 res.append(curr)
-            prev = curr.val in target
+            if curr.val in to_delete:
+                is_delete=True
+            else:
+                is_delete=False
+            curr.left= dfs(curr.left, is_delete)
+            curr.right= dfs(curr.right, is_delete)
 
-            curr.left= dfs(curr.left, prev)
-            curr.right= dfs(curr.right, prev)
-            
-            return curr if not prev else None
+            return curr if not is_delete else None
         dfs(root, True)
         return res
-        

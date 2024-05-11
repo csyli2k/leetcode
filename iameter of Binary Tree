@@ -5,17 +5,15 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         res=0
         def dfs(curr):
             nonlocal res
             if not curr:
                 return 0
-
-            left=max(dfs(curr.left),0)
-            right=max(dfs(curr.right),0)
-            
-            res=max(left+right+curr.val, res)
-            return max(left, right)+curr.val
+            left= dfs(curr.left)
+            right=dfs(curr.right)
+            res=max(left+right,res)
+            return max(left, right)+1
         dfs(root)
         return res

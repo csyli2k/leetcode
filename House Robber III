@@ -1,0 +1,19 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rob(self, root: Optional[TreeNode]) -> int:
+        def dfs(curr):
+            if not curr:
+                return 0,0
+            ldp0, ldp1= dfs(curr.left)
+            rdp0, rdp1= dfs(curr.right)
+            
+            dp0=ldp1+ rdp1
+            dp1= max(ldp1+ rdp1, curr.val+ldp0+rdp0)
+
+            return dp0, dp1
+        return max(dfs(root))

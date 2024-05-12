@@ -1,0 +1,40 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def minCameraCover(self, root: Optional[TreeNode]) -> int:
+        # three different
+        # state 0: new start point ,either empty node or children is where camera is placed
+        # state 1: children is state 0 (parent of parent of a camera)
+        # state 2: where camera is at
+        # check the root state if it is at state 1 which means the root node is not coverted , add 1 more camera
+
+        res=0
+        def dfs(curr):
+            nonlocal res
+            if not curr:
+                return 0
+            left=dfs(curr.left)
+            right=dfs(curr.right)
+            if left ==0 and right==0:
+                curr.val=1
+            elif left ==1 or right==1:
+                curr.val=2
+                res+=1
+            else:
+                curr.val=0
+            return curr.val
+        dfs(root)
+        if root.val==1:
+            return res+1
+        return res
+                
+                
+                
+            
+            
+            
+        

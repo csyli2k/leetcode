@@ -1,0 +1,9 @@
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        temp=defaultdict(int)
+        res=nums[0]
+        for a in nums:
+            temp[a]+=1
+            if temp[a]>temp[res]:
+                res=a
+        return res

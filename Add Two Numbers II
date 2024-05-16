@@ -11,7 +11,7 @@ class Solution:
                 temp=curr.next
                 curr.next=prev
                 prev=curr
-                curr=temp
+                curr= temp
             return prev
         
         r1=reverse(l1)
@@ -19,15 +19,17 @@ class Solution:
         carry=0
         res=dummy=ListNode()
         while r1 or r2 or carry:
-            t1= r1.val if r1 else 0
-            t2= r2.val if r2 else 0
-            total=t1+t2+carry
-            carry=total//10
-            dummy.next=ListNode(total%10)
-
+            t1=r1.val if r1 else 0
+            t2=r2.val if r2 else 0
+            temp=t1+t2+carry
+            carry= temp//10
+            dummy.next= ListNode(temp%10)
             dummy=dummy.next
+
             if r1:
                 r1=r1.next
             if r2:
                 r2=r2.next
+
+
         return reverse(res.next)

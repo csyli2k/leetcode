@@ -1,0 +1,36 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        def merge(left, right):
+            l1=len(left)
+            l2=len(right)
+            res=[]
+            l=0
+            r=0
+            while l< l1 and r< l2:
+                if left[l]< right[r]:
+                    res.append(left[l])
+                    l+=1
+                else:
+                    res.append(right[r])
+                    r+=1
+            if l< l1:
+                res+=left[l:]
+            if r< l2:
+                res+=right[r:]
+            return res
+
+
+        def mergesort(s, l,r):
+            if l==r:
+                return [s[l]]
+            mid=l+(r-l)//2
+            left= mergesort(s, l, mid)
+            right= mergesort(s,mid+1, r)
+
+            res=merge(left, right)
+            return res
+
+        l=0
+        r=len(nums)-1
+        return mergesort(nums,l,r)
+            

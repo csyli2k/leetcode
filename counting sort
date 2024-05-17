@@ -1,0 +1,22 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        def counting_sort():
+            min_v= math.inf
+            max_v= -math.inf
+            temp=defaultdict(int)
+            for num in nums:
+                temp[num]+=1
+                min_v= min(min_v, num)
+                max_v=max(max_v, num)
+            
+            index=0
+            for val in range(min_v, max_v+1):
+                if val in temp:
+                    count= temp[val]
+                    while count >0:
+                        nums[index]=val
+                        index+=1
+                        count-=1
+        counting_sort()
+        return nums
+                    

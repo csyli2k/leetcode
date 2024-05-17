@@ -1,0 +1,42 @@
+
+class MyLinkedList:
+
+    def __init__(self):
+        self.dict=[]
+        print(self.dict)
+
+        
+
+    def get(self, index: int) -> int:
+        if 0<=index< len(self.dict):
+            return self.dict[index]
+        return -1
+        
+
+    def addAtHead(self, val: int) -> None:
+        self.dict= [val]+self.dict[:]
+        print(self.dict)
+
+    def addAtTail(self, val: int) -> None:
+        self.dict=self.dict[:] + [val]
+
+        
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        
+        if 0<= index <= len(self.dict):
+            self.dict= self.dict[:index]+ [val]+ self.dict[index:]
+
+    def deleteAtIndex(self, index: int) -> None:
+        if 0<=index<len(self.dict):
+            self.dict=self.dict[:index]+self.dict[index+1:]
+        print(self.dict)
+
+
+# Your MyLinkedList object will be instantiated and called as such:
+# obj = MyLinkedList()
+# param_1 = obj.get(index)
+# obj.addAtHead(val)
+# obj.addAtTail(val)
+# obj.addAtIndex(index,val)
+# obj.deleteAtIndex(index)

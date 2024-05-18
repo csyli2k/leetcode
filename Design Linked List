@@ -1,36 +1,81 @@
-
+class node:
+    def __init__(self, val, nxt=None, prev=None):
+        self.val=val
+        self.next=nxt
+        self.prev=None
 class MyLinkedList:
 
     def __init__(self):
-        self.dict=[]
-        print(self.dict)
-
-        
+        self.len=0
+        self.head= node(0)
+        self.tail= node(0)
+        self.head.next=self.tail
+        self.tail.prev= self.head
 
     def get(self, index: int) -> int:
-        if 0<=index< len(self.dict):
-            return self.dict[index]
-        return -1
-        
+        if not 0<= index < self.len:
+            return -1
+        curr=self.head
+        for _ in range(index+1):
+            curr=curr.next
+        return curr.val
 
     def addAtHead(self, val: int) -> None:
-        self.dict= [val]+self.dict[:]
-        print(self.dict)
+        temp=self.head.next
+        curr=node(val)
+
+        self.head.next= curr
+        curr.prev= self.head
+
+        curr.next=temp
+        temp.prev= curr
+        self.len+=1
+
+
+        
 
     def addAtTail(self, val: int) -> None:
-        self.dict=self.dict[:] + [val]
+        temp= self.tail.prev
+        curr=node(val)
 
+        self.tail.prev= curr
+        curr.next=self.tail
+        
+        temp.next=curr
+        curr.prev=temp
+        self.len+=1
         
 
     def addAtIndex(self, index: int, val: int) -> None:
-        
-        if 0<= index <= len(self.dict):
-            self.dict= self.dict[:index]+ [val]+ self.dict[index:]
+        curr=self.head
+        if 0<= index<=self.len:
+            for _ in range(index):
+                curr=curr.next
+            to_add = node(val)
+            
+            temp=curr.next
+            
+            curr.next= to_add
+            to_add.prev= curr
+            
+            to_add.next=temp
+            temp.prev= to_add
+            self.len+=1
+
+
 
     def deleteAtIndex(self, index: int) -> None:
-        if 0<=index<len(self.dict):
-            self.dict=self.dict[:index]+self.dict[index+1:]
-        print(self.dict)
+        if 0<= index< self.len:
+            curr=self.head
+            for _ in range(index):
+                curr=curr.next
+            to_be_deleted=curr.next
+            nxt= to_be_deleted.next
+            curr.next=nxt
+            nxt.prev= curr
+            self.len-=1
+        
+
 
 
 # Your MyLinkedList object will be instantiated and called as such:

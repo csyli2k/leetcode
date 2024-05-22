@@ -1,0 +1,22 @@
+from sortedcontainers import SortedList
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        def binary_search(array, target):
+            l=0
+            r=len(array)
+            while l<r:
+                mid= l+(r-l)//2
+                if array[mid]>=target:
+                    r=mid
+                else:
+                    l=mid+1
+            return l
+
+        res=[]
+        sort= SortedList()
+        for i in range(len(nums)-1,-1,-1):
+            curr= nums[i]
+            index= binary_search(sort, curr)
+            sort.add(curr)
+            res.append(index)
+        return res[::-1]
